@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    printf("Opening was successfull! \n");
+    printf("Opening was successfull!\n");
 
     while(1){
         read(dev, &buff, 1);

@@ -36,17 +36,17 @@ static struct file_operations fops = {
 */
 static int __init ModuleInit (void) {
 	int retval;
-	printk("Hello, Kernel! \n");
+	printk("Hello, Kernel!\n");
 	/* register device nr. */
 	retval = register_chrdev (MYMAJOR, "my_dev_nr", &fops);
 	if(retval == 0) {
-		printk("dev_nr - registered Device number Major: %, Minor: %dIn", MYMAJOR, 0);
+		printk("dev_nr - registered Device number Major: %d, Minor: %d\n", MYMAJOR, 0);
 	}
 	else if(retval > 0) {
 		printk("dev_nr - registered Device number Major: %d, Minor: %d\n", retval>>20, retval&0xfffff);
 	}
 	else {
-		printk("Could not register device number! \n");
+		printk("Could not register device number!\n");
 		return -1;
 	}
 	return 0;
@@ -61,4 +61,4 @@ static void __exit ModuleExit (void) {
 }
 
 module_init(ModuleInit);
-module_exit (ModuleExit);
+module_exit(ModuleExit);
