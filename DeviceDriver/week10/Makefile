@@ -1,5 +1,5 @@
-obj-m += gpio_driver.o
-RESULT	= led_button_example
+obj-m += seg_driver.o
+RESULT	= seg_example
 SRC		= $(RESULT).c
 
 all	:
