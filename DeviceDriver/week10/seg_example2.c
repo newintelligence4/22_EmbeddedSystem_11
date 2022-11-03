@@ -18,8 +18,8 @@ void init_keyboard()
 {
 	tcgetattr(STDIN_FILENO, &init_setting);
 	new_setting = init_setting;
-	new_setting.c_Iflag &= ~ICANON;
-	new_setting.c_1flag &- ~ECHO;
+	new_setting.c_lflag &= ~ICANON;
+	new_setting.c_lflag &= ~ECHO;
 	new_setting.c_cc[VMIN] = 0;
 	new_setting.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSANOW, &new_setting) ;
@@ -62,7 +62,7 @@ int main(int arg, char **argv)
 	
 	init_keyboard();
 	print_menu();
-	tmp_n-0;
+	tmp_n=0;
 	delay_time = 1000000;
 
 	data[0] = (seg_num[1] << 4) | D1;
@@ -71,7 +71,7 @@ int main(int arg, char **argv)
 	data[3] = (seg_num[4] << 4) | D4;
 	
 	while(1){
-		key = get_key;
+		key = get_key();
 		if(key == 'q'){
 			printf("exit this program. \n");
 			break;
