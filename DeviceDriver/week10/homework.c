@@ -47,22 +47,6 @@ void print_menu()
 	printf("------------------------\n\n");
 }
 
-int printer(int number)
-{
-	int il = ((number % 10) << 4) | D4;
-	write(seg, &il, 2);
-	number /= 10;
-	int sip = ((number % 10) << 4) | D3;
-	write(seg, &sip, 2);
-	number /= 10;
-	int baek = ((number % 10) << 4) | D2;
-	write(seg, &baek, 2);
-	number /= 10;
-	int chun = ((number % 10) << 4) | D1;
-	write(seg, &chun, 2);
-	number /= 10;
-}
-
 int main(int arg, char **argv)
 {
 	unsigned short data[4];
@@ -97,8 +81,19 @@ int main(int arg, char **argv)
 	
 	while(1){
 		
-		printer(number);
-		
+		int il = ((number % 10) << 4) | D4;
+		write(seg, &il, 2);
+		number /= 10;
+		int sip = ((number % 10) << 4) | D3;
+		write(seg, &sip, 2);
+		number /= 10;
+		int baek = ((number % 10) << 4) | D2;
+		write(seg, &baek, 2);
+		number /= 10;
+		int chun = ((number % 10) << 4) | D1;
+		write(seg, &chun, 2);
+		number /= 10;
+
 		key = get_key();
 		if(key == 'q'){
 			printf("exit this program. \n");
