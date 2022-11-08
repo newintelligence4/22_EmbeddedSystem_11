@@ -156,7 +156,7 @@ static int __init ModuleInit(void) {
 		return -1;
 	}
 
-	printk("read_write - Device Nr. Major : %, Minor : %d was registered!\n" my_device_nr >> 20, my_device_nr && 0xffffff);
+	printk("read_write - Device Nr. Major : %d, Minor : %d was registered!\n" my_device_nr >> 20, my_device_nr && 0xffffff);
 	
 	/*Create device class*/
 	if((my_class = class_create(THIS_MODULE, DRIVER_CLASS)) == NULL) {
@@ -182,7 +182,7 @@ static int __init ModuleInit(void) {
 	/* Set GPIO 2 segments GPIO*/
 	/* GPIO 2 init */ 
 	if (gpio_request(2, "rpi-gpio-2")) {
-		printk("Can not allocate GPIO 2\n")
+		printk("Can not allocate GPIO 2\n");
 		goto AddError;
 	}
 	/* Set GPIO 2 direction*/ 
@@ -193,7 +193,7 @@ static int __init ModuleInit(void) {
 
 	/* GPIO 3 init */ 
 	if (gpio_request(3, "rpi-gpio-3")) {
-		printk("Can not allocate GPIO 3\n")
+		printk("Can not allocate GPIO 3\n");
 		goto AddError;
 	}
 	/* Set GPIO 3 direction*/ 
@@ -204,7 +204,7 @@ static int __init ModuleInit(void) {
 
 	/* GPIO 4 init */ 
 	if (gpio_request(4, "rpi-gpio-4")) {
-		printk("Can not allocate GPIO 4\n")
+		printk("Can not allocate GPIO 4\n");
 		goto AddError;
 	}
 	/* Set GPIO 4 direction*/ 
@@ -215,7 +215,7 @@ static int __init ModuleInit(void) {
 
 	/* GPIO 17 init */ 
 	if (gpio_request(17, "rpi-gpio-17")) {
-		printk("Can not allocate GPIO 17\n")
+		printk("Can not allocate GPIO 17\n");
 		goto AddError;
 	}
 	/* Set GPIO 17 direction*/ 
@@ -226,7 +226,7 @@ static int __init ModuleInit(void) {
 
 	/* GPIO 21 init */ 
 	if (gpio_request(21, "rpi-gpio-21")) {
-		printk("Can not allocate GPIO21 \n")
+		printk("Can not allocate GPIO21 \n");
 		goto AddError;
 	}
 	/* Set GPIO 21 direction*/ 
@@ -237,7 +237,7 @@ static int __init ModuleInit(void) {
 	
 	/* GPIO 20 init */ 
 	if (gpio_request(20, "rpi-gpio-20")) {
-		printk("Can not allocate GPIO20 \n")
+		printk("Can not allocate GPIO20 \n");
 		goto AddError;
 	}
 	/* Set GPIO 20 direction*/ 
@@ -248,7 +248,7 @@ static int __init ModuleInit(void) {
 
 	/* GPIO 16 init */ 
 	if (gpio_request(16, "rpi-gpio-16")) {
-		printk("Can not allocate GPIO 16\n")
+		printk("Can not allocate GPIO 16\n");
 		goto AddError;
 	}
 	/* Set GPIO 16 direction*/ 
@@ -259,7 +259,7 @@ static int __init ModuleInit(void) {
 
 	/* GPIO 12 init */ 
 	if (gpio_request(12, "rpi-gpio-12")) {
-		printk("Can not allocate GPIO 12\n")
+		printk("Can not allocate GPIO 12\n");
 		goto AddError;
 	}
 	/* Set GPIO 12 direction*/ 
@@ -270,7 +270,7 @@ static int __init ModuleInit(void) {
 
 	/* GPIO 7 init */ 
 	if (gpio_request(7, "rpi-gpio-7")) {
-		printk("Can not allocate GPIO7 \n")
+		printk("Can not allocate GPIO7 \n");
 		goto AddError;
 	}
 	/* Set GPIO 7 direction*/ 
@@ -281,7 +281,7 @@ static int __init ModuleInit(void) {
 
 	/* GPIO 8 init */ 
 	if (gpio_request(8, "rpi-gpio-8")) {
-		printk("Can not allocate GPIO8 \n")
+		printk("Can not allocate GPIO8 \n");
 		goto AddError;
 	}
 	/* Set GPIO 8 direction*/ 
@@ -292,7 +292,7 @@ static int __init ModuleInit(void) {
 
 	/* GPIO 25 init */ 
 	if (gpio_request(25, "rpi-gpio-15")) {
-		printk("Can not allocate GPIO 25\n")
+		printk("Can not allocate GPIO 25\n");
 		goto AddError;
 	}
 	/* Set GPIO 25 direction*/ 
@@ -303,7 +303,7 @@ static int __init ModuleInit(void) {
 
 	/* GPIO 24 init */ 
 	if (gpio_request(24, "rpi-gpio-24")) {
-		printk("Can not allocate GPIO24 \n")
+		printk("Can not allocate GPIO24 \n");
 		goto AddError;
 	}
 	/* Set GPIO 24 direction*/ 
@@ -312,7 +312,7 @@ static int __init ModuleInit(void) {
 		goto Gpio24Error;
 	}
 	
-	reutrn 0;
+	return 0;
 
 Gpio2Error:
     gpio_free(2);
@@ -390,7 +390,7 @@ static void __exit ModuleExit(void) {
 	gpio_free(24);
 	cdev_del(&my_device);
 	device_destroy(my_class, my_device_nr);
-	class_destory(my_class);
+	class_destroy(my_class);
 	unregister_chrdev_region(my_device_nr, 1);
 	printk("Goodbye, Kernel\b");
 }
