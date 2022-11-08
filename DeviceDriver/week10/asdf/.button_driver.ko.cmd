@@ -1,0 +1,1 @@
+cmd_/home/vlsi-emb2022/working/asdf/button_driver.ko := aarch64-linux-gnu-ld -r -EL  -maarch64elf -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/vlsi-emb2022/working/asdf/button_driver.ko /home/vlsi-emb2022/working/asdf/button_driver.o /home/vlsi-emb2022/working/asdf/button_driver.mod.o;  true
