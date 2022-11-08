@@ -47,6 +47,22 @@ void print_menu()
 	printf("------------------------\n\n");
 }
 
+int printer(int number)
+{
+	int il = ((number % 10) << 4) | D4;
+	write(seg, &il, 2);
+	number /= 10;
+	int sip = ((number % 10) << 4) | D3;
+	write(seg, &sip, 2);
+	number /= 10;
+	int baek = ((number % 10) << 4) | D2;
+	write(seg, &baek, 2);
+	number /= 10;
+	int chun = ((number % 10) << 4) | D1;
+	write(seg, &chun, 2);
+	number /= 10;
+}
+
 int main(int arg, char **argv)
 {
 	unsigned short data[4];
@@ -61,7 +77,11 @@ int main(int arg, char **argv)
 	int but = open("/dev/button", O_RDWR); // if you want read-'O_RDONLY' write= 'O_WRONLY', read&write= 'O_RDWR'
 	
 	if (seg == -1) {
-		printf("Opening was not possible! n");
+		printf("segment opening was not possible! n");
+		return -1;
+	}
+	if (but == -1) {
+		printf("button opening was not possible! n");
 		return -1;
 	}
 	printf("device opening was successfull! \n");
@@ -77,8 +97,8 @@ int main(int arg, char **argv)
 	
 	while(1){
 		
-		write(seg, &number, 2);
-
+		printer(number);
+		
 		key = get_key();
 		if(key == 'q'){
 			printf("exit this program. \n");
