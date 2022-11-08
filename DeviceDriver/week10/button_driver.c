@@ -80,7 +80,7 @@ static struct file_operations fops = {
 	.open = driver_open,
 	.release = driver_close,
 	.read = driver_read,
-	.write = driver write
+	.write = driver_write
 };
 
 /**
@@ -90,11 +90,11 @@ static int __init ModuleInit(void) {
 	printk("Hello, Kernel! \n");
 
 	/* Allocate a device nr */
-	if ( alloc_chrdev_region(&my_device _nr, 0, 1, DRIVER_NAME) < 0) {
+	if ( alloc_chrdev_region(&my_device_nr, 0, 1, DRIVER_NAME) < 0) {
 		printk("Device Nr. could not be allocated! \n");
 		return -1;
 	}
-	printk("read_write - Device Nr. Major: %d, Minor: %d was registered! \n", my_device_nr >> 20, my_device_nr && Oxfffff);
+	printk("read_write - Device Nr. Major: %d, Minor: %d was registered! \n", my_device_nr >> 20, my_device_nr && 0xfffff);
 	
 	/* Create device class */
 	if((my_class = class_create(THIS_MODULE, DRIVER_CLASS)) == NULL) {
@@ -108,7 +108,7 @@ static int __init ModuleInit(void) {
 	}
 	
 	/* Initialize device file */
-	cdev_init(&my _device, &fops);
+	cdev_init(&my_device, &fops);
 
 	/* Regisering device to kernel */
 	if (cdev_add(&my_device, my_device_nr, 1) == -1) {

@@ -11,15 +11,15 @@ int main(int argc, char **argv) {
 	int dev = open("/dev/my_segment", O_RDWR); // if you want read-'O_RDONLY* write= 'O WRONLY', read&write= 'O_RDWR'
 	
 	if(argc < 2){
-		printf("put arg Ox0000 or int\n");
+		printf("put arg 0x0000 or int\n");
 		return -1;
 	}
 	if(dev == -1) {
-		printf("Opening was not possible! \n");
+		printf("Opening was not possible!\n");
 		return -1;
 	}
 	
-	printf("Opening was successfull! \n");
+	printf("Opening was successfull!\n");
 
 	if(argv[1][0] == '0' && (argv[1][1] == 'x' || argv[1][1] == 'X'))
 		buff = (unsigned short)strtol(&argv[1][2], NULL, 16);
