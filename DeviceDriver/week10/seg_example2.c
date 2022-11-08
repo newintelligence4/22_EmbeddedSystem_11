@@ -52,7 +52,7 @@ int main(int arg, char **argv)
 	int tmp_n;
 	int delay_time;
 
-	int dev = open("/ dev/my_segment", O_RDWR); // if you want read-'O_RDONLY' write= 'O_WRONLY', read&write= 'O_RDWR'
+	int dev = open("/dev/my_segment", O_RDWR); // if you want read-'O_RDONLY' write= 'O_WRONLY', read&write= 'O_RDWR'
 	
 	if (dev == -1) {
 		printf("Opening was not possible! n");
@@ -81,7 +81,7 @@ int main(int arg, char **argv)
 			tmp_n=0;
 		}
 
-		write(dev, &data [tmp_n], 2);
+		write(dev, &data[tmp_n], 2);
 		usleep(delay_time);
 		
 		tmp_n++;

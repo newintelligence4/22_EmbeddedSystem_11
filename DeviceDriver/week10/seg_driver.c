@@ -17,8 +17,9 @@ static struct cdev my_device;
 
 #define DRIVER_NAME "my_segment"
 #define DRIVER_CLASS "HyModuleClass_seg"
+
 /***
-*brief Write data to buffer
+*@brief Write data to buffer
 */
 static ssize_t driver_write(struct file *File, const char *user_buffer,size_t count, loff_t *offs) {
     int to_copy, not_copied, delta;
@@ -30,7 +31,7 @@ static ssize_t driver_write(struct file *File, const char *user_buffer,size_t co
     /* Copy data to user*/
     not_copied = copy_from_user (&value, user_buffer, to_copy);
     /* Setting the segrents LED */
-    if(value & (1 <‹ 0)){ 
+    if(value & (1 << 0)){ 
         gpio_set_value(2, 1);
     }
     else{
@@ -159,7 +160,7 @@ static int _init ModuleInit(void) {
 	
 	/*Create device class*/
 	if((my_class = class_create(THIS_MODULE, DRIVER_CLASS)) == NULL) {
-		printk("Device class can not e created! \n"
+		printk("Device class can not e created! \n");
 		goto ClassError;
 	}
 
@@ -178,13 +179,12 @@ static int _init ModuleInit(void) {
 		goto AddError;
 	}
 
-	/* Set DI-4 segments GPIO*/
+	/* Set GPIO 2 segments GPIO*/
 	/* GPIO 2 init */ 
 	if (gpio_request(2, "rpi-gpio-2")) {
 		printk("Can not allocate GPIO 2\n")
 		goto AddError;
 	}
-
 	/* Set GPIO 2 direction*/ 
 	if(gpio_direction_output(2, 0)) {
 		printk("Can not set GPI0 2 to output!\n");
@@ -196,7 +196,6 @@ static int _init ModuleInit(void) {
 		printk("Can not allocate GPIO 3\n")
 		goto AddError;
 	}
-
 	/* Set GPIO 3 direction*/ 
 	if(gpio_direction_output(3, 0)) {
 		printk("Can not set GPI0 3 to output!\n");
@@ -208,7 +207,6 @@ static int _init ModuleInit(void) {
 		printk("Can not allocate GPIO 4\n")
 		goto AddError;
 	}
-
 	/* Set GPIO 4 direction*/ 
 	if(gpio_direction_output(4, 0)) {
 		printk("Can not set GPI0 4 to output!\n");
@@ -220,7 +218,6 @@ static int _init ModuleInit(void) {
 		printk("Can not allocate GPIO 17\n")
 		goto AddError;
 	}
-
 	/* Set GPIO 17 direction*/ 
 	if(gpio_direction_output(17, 0)) {
 		printk("Can not set GPI0 17 to output!\n");
@@ -232,7 +229,6 @@ static int _init ModuleInit(void) {
 		printk("Can not allocate GPIO21 \n")
 		goto AddError;
 	}
-
 	/* Set GPIO 21 direction*/ 
 	if(gpio_direction_output(21, 0)) {
 		printk("Can not set GPI0 21 to output!\n");
@@ -244,18 +240,17 @@ static int _init ModuleInit(void) {
 		printk("Can not allocate GPIO20 \n")
 		goto AddError;
 	}
-
 	/* Set GPIO 20 direction*/ 
 	if(gpio_direction_output(20, 0)) {
 		printk("Can not set GPI0 20 to output!\n");
 		goto Gpio20Error;
 	}
+
 	/* GPIO 16 init */ 
 	if (gpio_request(16, "rpi-gpio-16")) {
 		printk("Can not allocate GPIO 16\n")
 		goto AddError;
 	}
-
 	/* Set GPIO 16 direction*/ 
 	if(gpio_direction_output(16, 0)) {
 		printk("Can not set GPI0 16 to output!\n");
@@ -267,18 +262,17 @@ static int _init ModuleInit(void) {
 		printk("Can not allocate GPIO 12\n")
 		goto AddError;
 	}
-
 	/* Set GPIO 12 direction*/ 
 	if(gpio_direction_output(12, 0)) {
 		printk("Can not set GPI0 12 to output!\n");
 		goto Gpio12Error;
 	}
+
 	/* GPIO 7 init */ 
 	if (gpio_request(7, "rpi-gpio-7")) {
 		printk("Can not allocate GPIO7 \n")
 		goto AddError;
 	}
-
 	/* Set GPIO 7 direction*/ 
 	if(gpio_direction_output(7, 0)) {
 		printk("Can not set GPI0 7 to output!\n");
@@ -290,29 +284,28 @@ static int _init ModuleInit(void) {
 		printk("Can not allocate GPIO8 \n")
 		goto AddError;
 	}
-
 	/* Set GPIO 8 direction*/ 
 	if(gpio_direction_output(8, 0)) {
 		printk("Can not set GPI0 8 to output!\n");
 		goto Gpio8Error;
 	}
+
 	/* GPIO 25 init */ 
 	if (gpio_request(25, "rpi-gpio-15")) {
 		printk("Can not allocate GPIO 25\n")
 		goto AddError;
 	}
-
 	/* Set GPIO 25 direction*/ 
 	if(gpio_direction_output(25, 0)) {
 		printk("Can not set GPI0 25 to output!\n");
 		goto Gpio25Error;
 	}
+
 	/* GPIO 24 init */ 
 	if (gpio_request(24, "rpi-gpio-24")) {
 		printk("Can not allocate GPIO24 \n")
 		goto AddError;
 	}
-
 	/* Set GPIO 24 direction*/ 
 	if(gpio_direction_output(24, 0)) {
 		printk("Can not set GPI0  to output!\n");
@@ -365,7 +358,6 @@ ClassError:
     return -1;
 
 }
-
 
 
 /**
