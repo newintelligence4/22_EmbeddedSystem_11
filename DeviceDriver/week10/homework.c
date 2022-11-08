@@ -100,17 +100,20 @@ int main(int arg, char **argv)
 			break;
 		}
 		else if(key == 'p'){
-			printf("pressed p");
+			printf("number is %d p", number);
+			printf("pressed p\n");
 			number = 0;
 		}
 		else if(key == 'u'){
-			printf("pressed u");
+			printf("number is %d p", number);
+			printf("pressed u\n");
 			number++;
 			if(number >= 10000)
 				number = 0;
 		}
 		else if(key == 'd'){
-			printf("pressed d");
+			printf("number is %d p", number);
+			printf("pressed d\n");
 			number--;
 			if(number < 0)
 				number = 9999;
@@ -120,12 +123,12 @@ int main(int arg, char **argv)
         prev = tmp;
         tmp = buff;
         write(but, &tmp, 1);
-        if(prev != tmp && tmp == '0') {
-			printf("pressed button1");
+        if(prev != tmp && tmp == '1') {
+			printf("pressed button1\n");
 			number++;
 		}
-        else if(prev != tmp && tmp == 'A'){
-			printf("pressed button2");
+        else if(prev != tmp && tmp == 'B'){
+			printf("pressed button2\n");
 			number--;
 		}
 
