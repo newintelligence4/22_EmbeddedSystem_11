@@ -53,8 +53,7 @@ int main(int arg, char **argv)
 	char key;
 	int number;
 	int delay_time;
-	char status_a;
-	char status_b;
+	char status;
 	char tmp;
 	char buff;
 
@@ -74,8 +73,7 @@ int main(int arg, char **argv)
 	init_keyboard();
 	print_menu();
 	number = 0;
-	status_a = '0';
-	status_b = 'A';
+	status = 3;
 
 	data[0] = (seg_num[1] << 4) | D1;
 	data[1] = (seg_num[2] << 4) | D2;
@@ -105,51 +103,45 @@ int main(int arg, char **argv)
 
 		key = get_key();
 		if(key == 'q'){
-			printf("exit this program. \n");
+			printf("exiting program. \n");
 			break;
 		}
 		else if(key == 'p'){
-			printf("number is %d p", number);
-			printf("pressed p\n");
+			printf("pressed P\n");
 			number = 0;
 		}
 		else if(key == 'u'){
-			printf("number is %d p", number);
-			printf("pressed u\n");
+			printf("pressed U\n");
 			number++;
-			printf("number is %d p", number);
-			printf("added one\n");
-			if(number >= 10000) {
-				printf("?????\n");
+			if(number >= 10000)
 				number = 0;
-			}
 		}
 		else if(key == 'd'){
-			printf("number is %d p", number);
-			printf("pressed d\n");
+			printf("pressed D\n");
 			number--;
 			if(number < 0)
 				number = 9999;
 		}
 
 		read(but, &tmp, 1);
-        write(but, &tmp, 1);
-        if(status_a == '0' && tmp == '1') {
-			printf("pressed button1\n");
-			status_a = '1';
+        if(status == 3 && tmp == 2) {
+			printf("pressed button 1\n");
+			status = 2;
 			number++;
+			if(number >= 10000)
+				number = 0;
 		}
-        else if(status_a == '1' && tmp == '0')
-			status_a = '0';
-	
-		if(status_b == 'A' && tmp == 'B') {
-			printf("pressed button2\n");
-			status_b = 'B';
-			number++;
+		else if(status == 3 && tmp == 1) {
+			printf("pressed button 2\n");
+			status = 1;
+			number--;
+			if(number < 0)
+				number = 9999;
 		}
-		else if(status_b == 'B' && tmp == 'A')
-			status_b = 'A';
+		else if((status == 2 || status == 1)&& tmp == 3)
+			status = 3;
 
+        //write(but, &tmp, 1);
 	}
 	close_keyboard();
 	write(seg, 0x0000, 2);
