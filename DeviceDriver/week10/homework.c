@@ -53,7 +53,8 @@ int main(int arg, char **argv)
 	char key;
 	int number;
 	int delay_time;
-	char prev;
+	char status_a;
+	char status_b;
 	char tmp;
 	char buff;
 
@@ -73,27 +74,34 @@ int main(int arg, char **argv)
 	init_keyboard();
 	print_menu();
 	number = 0;
+	status_a = '0';
+	status_b = 'A';
 
 	data[0] = (seg_num[1] << 4) | D1;
 	data[1] = (seg_num[2] << 4) | D2;
 	data[2] = (seg_num[3] << 4) | D3;
 	data[3] = (seg_num[4] << 4) | D4;
 	
+	unsigned short tmpn, il, sip, baek, chun;
+
 	while(1){
 		
-		unsigned short tmp = number;
-		unsigned short il = (seg_num[tmp % 10] << 4) | D4;
+		il = (seg_num[number % 10] << 4) | D4;
 		write(seg, &il, 2);
-		tmp /= 10;
-		unsigned short sip = (seg_num[tmp % 10] << 4) | D3;
+		usleep(15);
+		write(seg, NULL, 2);
+		sip = (seg_num[(number % 100) / 10] << 4) | D3;
 		write(seg, &sip, 2);
-		tmp /= 10;
-		unsigned short baek = (seg_num[tmp % 10] << 4) | D2;
+		usleep(15);
+		write(seg, NULL, 2);
+		baek = (seg_num[(number % 1000) / 100] << 4) | D2;
 		write(seg, &baek, 2);
-		tmp /= 10;
-		unsigned short chun = (seg_num[tmp % 10] << 4) | D1;
+		usleep(15);
+		write(seg, NULL, 2);
+		chun = (seg_num[(number % 10000) / 1000] << 4) | D1;
 		write(seg, &chun, 2);
-		tmp /= 10;
+		usleep(15);
+		write(seg, NULL, 2);
 
 		key = get_key();
 		if(key == 'q'){
@@ -124,18 +132,23 @@ int main(int arg, char **argv)
 				number = 9999;
 		}
 
-		read(but, &buff, 1);
-        prev = tmp;
-        tmp = buff;
+		read(but, &tmp, 1);
         write(but, &tmp, 1);
-        if(prev != tmp && tmp == '1') {
+        if(status_a == '0' && tmp == '1') {
 			printf("pressed button1\n");
+			status_a = '1';
 			number++;
 		}
-        else if(prev != tmp && tmp == 'B'){
+        else if(status_a == '1' && tmp == '0')
+			status_a = '0';
+	
+		if(status_b == 'A' && tmp == 'B') {
 			printf("pressed button2\n");
-			number--;
+			status_b = 'B';
+			number++;
 		}
+		else if(status_b == 'B' && tmp == 'A')
+			status_b = 'A';
 
 	}
 	close_keyboard();
