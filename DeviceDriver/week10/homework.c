@@ -51,12 +51,16 @@ int main(int arg, char **argv)
 {
 	unsigned short data[4];
 	char key;
-	int tmp_n;
+	int number;
 	int delay_time;
+	char prev;
+	char tmp;
+	char buff;
 
-	int dev = open("/dev/my_segment", O_RDWR); // if you want read-'O_RDONLY' write= 'O_WRONLY', read&write= 'O_RDWR'
+	int seg = open("/dev/my_segment", O_RDWR); // if you want read-'O_RDONLY' write= 'O_WRONLY', read&write= 'O_RDWR'
+	int but = open("/dev/button", O_RDWR); // if you want read-'O_RDONLY' write= 'O_WRONLY', read&write= 'O_RDWR'
 	
-	if (dev == -1) {
+	if (seg == -1) {
 		printf("Opening was not possible! n");
 		return -1;
 	}
@@ -64,7 +68,7 @@ int main(int arg, char **argv)
 	
 	init_keyboard();
 	print_menu();
-	tmp_n=0;
+	number = 0;
 
 	data[0] = (seg_num[1] << 4) | D1;
 	data[1] = (seg_num[2] << 4) | D2;
@@ -72,34 +76,40 @@ int main(int arg, char **argv)
 	data[3] = (seg_num[4] << 4) | D4;
 	
 	while(1){
+		
+		write(seg, &number, 2);
+
 		key = get_key();
 		if(key == 'q'){
 			printf("exit this program. \n");
 			break;
 		}
 		else if(key == 'p'){
-			
+			number = 0;
 		}
 		else if(key == 'u'){
-
+			number++;
+			if(number >= 10000)
+				number = 0;
 		}
 		else if(key == 'd'){
-			
+			number--;
+			if(number < 0)
+				number = 9999;
 		}
 
-		write(dev, &data[tmp_n], 2);
-		usleep(delay_time);
-		
-		tmp_n++;
-		if(tmp_n >3){
-			tmp_n = 0;
-			if (delay_time > 5000){
-				delay_time /= 2;
-			}
-		}
+		read(but, &buff, 1);
+        prev = tmp;
+        tmp = buff;
+        write(but, &tmp, 1);
+        if(prev != tmp && tmp == '0')
+			number++;
+        else if(prev != tmp && tmp == 'A')
+			number--;
+
 	}
 	close_keyboard();
-	write(dev, 0x0000, 2);
-	close(dev);
+	write(seg, 0x0000, 2);
+	close(seg);
 	return 0;
 }

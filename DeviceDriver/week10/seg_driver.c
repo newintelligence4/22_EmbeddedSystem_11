@@ -156,7 +156,7 @@ static int __init ModuleInit(void) {
 		return -1;
 	}
 
-	printk("read_write - Device Nr. Major : %d, Minor : %d was registered!\n" my_device_nr >> 20, my_device_nr && 0xffffff);
+	printk("read_write - Device Nr. Major : %d, Minor : %d was registered!\n", my_device_nr >> 20, my_device_nr && 0xffffff);
 	
 	/*Create device class*/
 	if((my_class = class_create(THIS_MODULE, DRIVER_CLASS)) == NULL) {
