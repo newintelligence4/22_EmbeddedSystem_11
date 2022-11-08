@@ -45,13 +45,6 @@ void print_menu()
 	printf("------------------------\n\n");
 }
 
-int translator(int number)
-{
-	int out = 0;
-
-	
-}
-
 int main(int arg, char **argv)
 {
 	unsigned short data[4];

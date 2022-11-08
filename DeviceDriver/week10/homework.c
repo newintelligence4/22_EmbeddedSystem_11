@@ -81,16 +81,16 @@ int main(int arg, char **argv)
 	
 	while(1){
 		
-		int il = (seg_num[number % 10] << 4) | D4;
+		unsigned short il = (seg_num[number % 10] << 4) | D4;
 		write(seg, &il, 2);
 		number /= 10;
-		int sip = (seg_num[number % 10] << 4) | D3;
+		unsigned short sip = (seg_num[number % 10] << 4) | D3;
 		write(seg, &sip, 2);
 		number /= 10;
-		int baek = (seg_num[number % 10] << 4) | D2;
+		unsigned short baek = (seg_num[number % 10] << 4) | D2;
 		write(seg, &baek, 2);
 		number /= 10;
-		int chun = (seg_num[number % 10] << 4) | D1;
+		unsigned short chun = (seg_num[number % 10] << 4) | D1;
 		write(seg, &chun, 2);
 		number /= 10;
 
@@ -100,14 +100,17 @@ int main(int arg, char **argv)
 			break;
 		}
 		else if(key == 'p'){
+			printf("pressed p");
 			number = 0;
 		}
 		else if(key == 'u'){
+			printf("pressed u");
 			number++;
 			if(number >= 10000)
 				number = 0;
 		}
 		else if(key == 'd'){
+			printf("pressed d");
 			number--;
 			if(number < 0)
 				number = 9999;
@@ -117,10 +120,14 @@ int main(int arg, char **argv)
         prev = tmp;
         tmp = buff;
         write(but, &tmp, 1);
-        if(prev != tmp && tmp == '0')
+        if(prev != tmp && tmp == '0') {
+			printf("pressed button1");
 			number++;
-        else if(prev != tmp && tmp == 'A')
+		}
+        else if(prev != tmp && tmp == 'A'){
+			printf("pressed button2");
 			number--;
+		}
 
 	}
 	close_keyboard();
