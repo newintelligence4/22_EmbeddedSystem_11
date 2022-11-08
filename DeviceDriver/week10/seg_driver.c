@@ -6,9 +6,9 @@
 #include <linux/gpio.h>
 
 /* Meta Infornation*/ 
-MOCULE_LICENSE("GPL");
-MOOULE_AUTHOR("Johannes 4 GNU/Linux");
-MOOULE_DESCRIPTION("A simple gpio driver for segments");
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Johannes 4 GNU/Linux");
+MODULE_DESCRIPTION("A simple gpio driver for segments");
 
 /*Variables for device and device class */
 static dev_t my_device_nr;
@@ -42,77 +42,77 @@ static ssize_t driver_write(struct file *File, const char *user_buffer,size_t co
         gpio_set_value(3, 1);
     }
     else {
-        gpio_ set_value(3, 0);
+        gpio_set_value(3, 0);
     }
 
     if(value & (1 << 2)) {
         gpio_set_value(4, 1);
     }
     else {
-        gpio_ set_value(4, 0);
+        gpio_set_value(4, 0);
     }
 
     if(value & (1 << 3)) {
         gpio_set_value(17, 1);
     }
     else {
-        gpio_ set_value(17, 0);
+        gpio_set_value(17, 0);
     }
 
     if(value & (1 << 4)) {
         gpio_set_value(21, 1);
     }
     else {
-        gpio_ set_value(21, 0);
+        gpio_set_value(21, 0);
     }
 
     if(value & (1 << 5)) {
         gpio_set_value(20, 1);
     }
     else {
-        gpio_ set_value(20, 0);
+        gpio_set_value(20, 0);
     }
 
     if(value & (1 << 6)) {
         gpio_set_value(16, 1);
     }
     else {
-        gpio_ set_value(16, 0);
+        gpio_set_value(16, 0);
     }
 
     if(value & (1 << 7)) {
         gpio_set_value(12, 1);
     }
     else {
-        gpio_ set_value(12, 0);
+        gpio_set_value(12, 0);
     }
 
     if(value & (1 << 8)) {
         gpio_set_value(7, 1);
     }
     else {
-        gpio_ set_value(7, 0);
+        gpio_set_value(7, 0);
     }
 
     if(value & (1 << 9)) {
         gpio_set_value(8, 1);
     }
     else {
-        gpio_ set_value(8, 0);
+        gpio_set_value(8, 0);
     }
 
     if(value & (1 << 10)) {
         gpio_set_value(25, 1);
     }
     else {
-        gpio_ set_value(25, 0);
+        gpio_set_value(25, 0);
     }
 
     if(value & (1 << 11)) {
         gpio_set_value(24, 1);
     }
     else {
-        gpio_ set_value(24, 0);
+        gpio_set_value(24, 0);
     }
 
     delta = to_copy - not_copied;
@@ -135,7 +135,7 @@ static int driver_close(struct inode *device_file, struct file *instance){
     return 0;
 }
 
-static struct file_operation fops = {
+static struct file_operations fops = {
     .owner = THIS_MODULE,
     .open = driver_open,
     .release = driver_close,
@@ -147,7 +147,7 @@ static struct file_operation fops = {
 /**
  * @brief This function is called, when the module is loaded into the kernel
  */ 
-static int _init ModuleInit(void) {
+static int __init ModuleInit(void) {
 	printk("Hello, Kernel!\n");
 
 	/* Allocate a device nr*/
