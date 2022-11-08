@@ -1,0 +1,1 @@
+cmd_/home/vlsi-emb2022/working/week10/example1/Module.symvers := sed 's/\.ko$$/\.o/' /home/vlsi-emb2022/working/week10/example1/modules.order | scripts/mod/modpost -m -a  -o /home/vlsi-emb2022/working/week10/example1/Module.symvers -e -i Module.symvers   -T -

@@ -1,0 +1,2 @@
+/home/vlsi-emb2022/working/week10/example2/seg_driver.o
+

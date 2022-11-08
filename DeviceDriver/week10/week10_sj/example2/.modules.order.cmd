@@ -1,0 +1,1 @@
+cmd_/home/vlsi-emb2022/working/week10/example2/modules.order := {   echo /home/vlsi-emb2022/working/week10/example2/seg_driver.ko; :; } | awk '!x[$$0]++' - > /home/vlsi-emb2022/working/week10/example2/modules.order
