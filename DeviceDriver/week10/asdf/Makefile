@@ -1,5 +1,5 @@
 obj-m += button_driver.o
-RESULT	= button_driver
+RESULT	= homework
 SRC		= $(RESULT).c
 
 all	:

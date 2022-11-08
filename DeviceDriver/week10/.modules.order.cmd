@@ -1,0 +1,1 @@
+cmd_/home/vlsi-emb2022/working/22_EmbeddedSystem_11/DeviceDriver/week10/modules.order := {   echo /home/vlsi-emb2022/working/22_EmbeddedSystem_11/DeviceDriver/week10/button_driver.ko; :; } | awk '!x[$$0]++' - > /home/vlsi-emb2022/working/22_EmbeddedSystem_11/DeviceDriver/week10/modules.order
