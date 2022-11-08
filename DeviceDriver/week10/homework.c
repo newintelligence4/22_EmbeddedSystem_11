@@ -81,18 +81,19 @@ int main(int arg, char **argv)
 	
 	while(1){
 		
-		unsigned short il = (seg_num[number % 10] << 4) | D4;
+		unsigned short tmp = number;
+		unsigned short il = (seg_num[tmp % 10] << 4) | D4;
 		write(seg, &il, 2);
-		number /= 10;
-		unsigned short sip = (seg_num[number % 10] << 4) | D3;
+		tmp /= 10;
+		unsigned short sip = (seg_num[tmp % 10] << 4) | D3;
 		write(seg, &sip, 2);
-		number /= 10;
-		unsigned short baek = (seg_num[number % 10] << 4) | D2;
+		tmp /= 10;
+		unsigned short baek = (seg_num[tmp % 10] << 4) | D2;
 		write(seg, &baek, 2);
-		number /= 10;
-		unsigned short chun = (seg_num[number % 10] << 4) | D1;
+		tmp /= 10;
+		unsigned short chun = (seg_num[tmp % 10] << 4) | D1;
 		write(seg, &chun, 2);
-		number /= 10;
+		tmp /= 10;
 
 		key = get_key();
 		if(key == 'q'){
@@ -108,8 +109,12 @@ int main(int arg, char **argv)
 			printf("number is %d p", number);
 			printf("pressed u\n");
 			number++;
-			if(number >= 10000)
+			printf("number is %d p", number);
+			printf("added one\n");
+			if(number >= 10000) {
+				printf("?????\n");
 				number = 0;
+			}
 		}
 		else if(key == 'd'){
 			printf("number is %d p", number);
