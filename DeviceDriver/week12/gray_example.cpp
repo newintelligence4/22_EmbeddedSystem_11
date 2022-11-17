@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp> 
-#include <opencv2/improc.hpp> 
+#include <opencv2/imgproc.hpp> 
 #include <opencv2/highgui.hpp> 
 #include <opencv2/videoio.hpp> 
 #include <opencv2/photo.hpp>
@@ -47,3 +47,4 @@ int main(int argc, char** argv)
 	imwrite("gray_image.bmp", gray);
 	return 0;
 }
+//g++ -o gray_example gray_example.cpp $(pkg-config opencv4 --libs --cflags)
