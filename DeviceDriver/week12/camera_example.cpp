@@ -46,3 +46,4 @@ int main(int argc, char** argv) {
 	video.release();
 	return 0;
 }
+//g++ -o camera camera_example.cpp $(pkg-config opencv4 --libs --cflags)

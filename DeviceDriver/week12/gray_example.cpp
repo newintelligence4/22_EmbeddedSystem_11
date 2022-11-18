@@ -33,15 +33,15 @@ int main(int argc, char** argv)
 	width = img.cols;
 	Mat gray(height, width, CV_8UC1);
 	
-	for (int i-0; i<height; i++){
-		for (int j-0; j<width; j++){
+	for (int i=0; i<height; i++){
+		for (int j=0; j<width; j++){
 			R_val = img.at<Vec3b>(i,j)[2];
 			G_val = img.at<Vec3b>(i,j)[1];
 			B_val = img.at<Vec3b>(i,j)[0];
 			
 			average_gray = (int)((R_val + G_val + B_val) / 3);
 
-			gray.at<uchar>(j,j) = average_gray;
+			gray.at<uchar>(i,j) = average_gray;
 		}
 	}
 	imwrite("gray_image.bmp", gray);
