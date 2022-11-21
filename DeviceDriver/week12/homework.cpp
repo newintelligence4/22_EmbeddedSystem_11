@@ -12,7 +12,7 @@ using namespace cv;
 
 int main(int argc, char** argv) {
 	
-	int max = 0;
+	int max = 0, count = 0;
 	VideoCapture cap;
 	cap.open("/dev/video0", CAP_V4L2);
 	if (!cap.isOpened()) {
