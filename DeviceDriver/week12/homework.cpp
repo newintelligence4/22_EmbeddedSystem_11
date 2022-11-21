@@ -38,34 +38,21 @@ int main(int argc, char** argv) {
 		max = 50;
 	}
 
-	Mat gray(frame_height, frame_width, CV_8UC1);
+	Mat img, sobelX, sobelY;
 	Mat sobel, sobelX, sobelY;
 	int R_val, G_val, B_val;
 	float average_gray;
 	while (count <= max) {
 		cap.read(img);
 		if (img.empty()) break;
-		count++;
-
-		//color img�� gray scale�� ��ȯ
-		for (int i = 0; i < frame_height; i++) {
-			for (int j = 0; j < frame_width; j++) {
-				R_val = img.at<Vec3b>(i, j)[2];
-				B_val = img.at<Vec3b>(i, j)[1];
-				G_val = img.at<Vec3b>(i, j)[0];
-
-				average_gray = (int)((R_val + G_val + B_val) / 3);
-
-				gray.at<uchar>(i, j) = average_gray;
-			}
-		}
 
 		//gray scale img�� sobel �Լ��� �̿��� sobel img ���
-		Sobel(gray, sobelX, CV_8U, 1, 0);
-		Sobel(gray, sobelY, CV_8U, 0, 1);
+		Sobel(img, sobelX, CV_8U, 1, 0);
+		Sobel(img, sobelY, CV_8U, 0, 1);
 		sobel = abs(sobelX) + abs(sobelY);
 
-		video.write(sobel);//write
+		video.write(img);//write
+		count++;
 	}
 
 	cap.release();
@@ -74,5 +61,3 @@ int main(int argc, char** argv) {
 }
 
 //g++ -o homework homework.cpp $(pkg-config opencv4 --libs --cflags)
-
-
