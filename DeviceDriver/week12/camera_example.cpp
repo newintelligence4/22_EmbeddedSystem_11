@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 	int frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
 	int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
 	// Define the codec and create VideoWriter object. The output is stored in 'outcpp.avi' file.
-	VideoWriter video("outcpp.avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 10, Size(frame _width, frame_height));
+	VideoWriter video("outcpp.avi", cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), 10, Size(frame_width, frame_height));
 
 	printf("Open Camera\n");
 	Mat img;

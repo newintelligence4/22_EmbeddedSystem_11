@@ -5,12 +5,14 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/videoio.hpp>
-#include <photo.hpp>
+#include <opencv2/photo.hpp>
 
 using namespace std;
 using namespace cv;
 
 int main(int argc, char** argv) {
+	
+	int max = 0;
 	VideoCapture cap;
 	cap.open("/dev/video0", CAP_V4L2);
 	if (!cap.isOpened()) {
@@ -30,14 +32,14 @@ int main(int argc, char** argv) {
 
 	if (argc > 1) {
 		max = int(argv[1]);
-		//img = imread(argv[1], IMREAD_COLOR);//Ä«¸Þ¶ó¿¡ ÀâÈ÷´Â img load
+		//img = imread(argv[1], IMREAD_COLOR);//Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ img load
 	}
 	else {
 		max = 50;
 	}
 
 	Mat gray(frame_height, frame_width, CV_8UC1);
-	Mat sobel;
+	Mat sobel, sobelX, sobelY;
 	int R_val, G_val, B_val;
 	float average_gray;
 	while (count <= max) {
@@ -45,7 +47,7 @@ int main(int argc, char** argv) {
 		if (img.empty()) break;
 		count++;
 
-		//color img¸¦ gray scale·Î º¯È¯
+		//color imgï¿½ï¿½ gray scaleï¿½ï¿½ ï¿½ï¿½È¯
 		for (int i = 0; i < frame_height; i++) {
 			for (int j = 0; j < frame_width; j++) {
 				R_val = img.at<Vec3b>(i, j)[2];
@@ -58,7 +60,7 @@ int main(int argc, char** argv) {
 			}
 		}
 
-		//gray scale img¸¦ sobel ÇÔ¼ö¸¦ ÀÌ¿ëÇØ sobel img Ãâ·Â
+		//gray scale imgï¿½ï¿½ sobel ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½ï¿½ sobel img ï¿½ï¿½ï¿½
 		Sobel(gray, sobelX, CV_8U, 1, 0);
 		Sobel(gray, sobelY, CV_8U, 0, 1);
 		sobel = abs(sobelX) + abs(sobelY);
@@ -71,6 +73,6 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-
+//g++ -o homework homework.cpp $(pkg-config opencv4 --libs --cflags)
 
 
