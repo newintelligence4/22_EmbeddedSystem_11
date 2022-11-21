@@ -25,10 +25,9 @@ int main(int argc, char** argv) {
 	int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
 
 	//Define the codec and create VideoWriter object.The output is stored in 'outcpp.avi' file.
-	VideoWriter video("outcpp.avi",cv::VideoWriter::fourcc('M','J','P','G'),10,Size(frame_width,frame_height));
+	VideoWriter video("homework.avi",cv::VideoWriter::fourcc('M','J','P','G'),10,Size(frame_width,frame_height));
 
 	printf("Open Camera\n");
-	Mat img;
 
 	if (argc > 1) {
 		max = int(argv[1]);
@@ -38,20 +37,17 @@ int main(int argc, char** argv) {
 		max = 50;
 	}
 
-	Mat img, sobelX, sobelY;
-	Mat sobel, sobelX, sobelY;
-	int R_val, G_val, B_val;
-	float average_gray;
+	Mat sobel, img, sobelX, sobelY;
+
 	while (count <= max) {
 		cap.read(img);
 		if (img.empty()) break;
-
-		//gray scale img�� sobel �Լ��� �̿��� sobel img ���
+		
 		Sobel(img, sobelX, CV_8U, 1, 0);
 		Sobel(img, sobelY, CV_8U, 0, 1);
 		sobel = abs(sobelX) + abs(sobelY);
 
-		video.write(img);//write
+		video.write(sobel);//write
 		count++;
 	}
 
