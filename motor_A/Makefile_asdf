@@ -1,0 +1,7 @@
+obj-m += motordriver.o
+
+all	:
+	make -C ~/working/Raspbian/kernel M=$(PWD) modules
+
+clean	:
+	make -C ~/working/Raspbian/kernel M=$(PWD) clean
