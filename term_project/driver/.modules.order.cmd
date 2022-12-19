@@ -1,0 +1,1 @@
+cmd_/home/pi/working/term_project/drivers/modules.order := {   echo /home/pi/working/term_project/drivers/seg_driver.ko;   echo /home/pi/working/term_project/drivers/button_driver.ko; :; } | awk '!x[$$0]++' - > /home/pi/working/term_project/drivers/modules.order

@@ -16,7 +16,7 @@ static struct class *my_class;
 static struct cdev my_device;
 
 #define DRIVER_NAME "my_button"
-#define DRIVER_CLASS "MyModuleClass_but"
+#define DRIVER_CLASS "MyModuleClass"
 
 /**
 * @brief Read data out of the buffer
@@ -25,31 +25,13 @@ static ssize_t driver_read(struct file *File, char *user_buffer, size_t count, l
 	int to_copy, not_copied, delta;
 	char tmp[2];
 
-	/* Get amount of data to copy */
 	to_copy = min(count, sizeof(tmp));
 
-	/* Read value of button */
-
 	tmp[0] = gpio_get_value(5) + '0';
-	tmp[1] = gpio_get_value(6) + '0';
-
-
 
 	not_copied = copy_to_user(user_buffer, &tmp, to_copy);
-
-/*
-	tmp = gpio_get_value(5) + '0';
-	not_copied = copy_to_user(user_buffer, &tmp, to_copy);
-
-
-	tmp = gpio_get_value(6) + 'A';
-	not_copied = copy_to_user(user_buffer, &tmp, to_copy);
-*/
-
-
-	/* Calculate data */
+	
 	delta = to_copy - not_copied;
-
 
 	return delta;
 }
@@ -106,7 +88,7 @@ static int __init ModuleInit(void) {
 		printk("Device Nr. could not be allocated! \n");
 		return -1;
 	}
-	printk("button - Device Nr. Major: %d, Minor: %d was registered! \n", my_device_nr >> 20, my_device_nr && 0xfffff);
+	printk("read_write - Device Nr. Major: %d, Minor: %d was registered! \n", my_device_nr >> 20, my_device_nr && 0xfffff);
 	
 	/* Create device class */
 	if((my_class = class_create(THIS_MODULE, DRIVER_CLASS)) == NULL) {
@@ -140,23 +122,9 @@ static int __init ModuleInit(void) {
 		goto Gpio5Error;
 	}
 	
-	/* GPIO 6 init */
-	if(gpio_request(6, "rpi-gpio-6")) {
-		printk("Can not allocate GPIO 6\n");
-		goto AddError;
-	}
-	
-	/* Set GPIO 17 direction */
-	if(gpio_direction_input(6)) {
-		printk("Can not set GPIO 6 to input!\n");
-	goto Gpio6Error;
-	}
-
 	return 0;
 Gpio5Error:
 	gpio_free(5);
-Gpio6Error:
-	gpio_free(6);
 AddError:
 	device_destroy(my_class, my_device_nr);
 FileError:
@@ -171,7 +139,6 @@ ClassError:
 */
 static void __exit ModuleExit(void) {
 	gpio_free(5);
-	gpio_free(6);
 	cdev_del (&my_device);
 	device_destroy(my_class, my_device_nr);
 	class_destroy(my_class);

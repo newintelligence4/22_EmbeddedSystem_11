@@ -58,7 +58,7 @@ int main(int arg, char **argv)
 	char buff;
 
 	int seg = open("/dev/my_segment", O_RDWR); // if you want read-'O_RDONLY' write= 'O_WRONLY', read&write= 'O_RDWR'
-	int but = open("/dev/button", O_RDWR); // if you want read-'O_RDONLY' write= 'O_WRONLY', read&write= 'O_RDWR'
+	int but = open("/dev/my_button", O_RDWR); // if you want read-'O_RDONLY' write= 'O_WRONLY', read&write= 'O_RDWR'
 	
 	if (seg == -1) {
 		printf("segment opening was not possible! n");

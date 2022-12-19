@@ -29,7 +29,8 @@ python3 detect.py \
 import argparse
 import cv2
 import os
-
+import mmap
+import timeit
 from pycoral.adapters.common import input_size
 from pycoral.adapters.detect import get_objects
 from pycoral.utils.dataset import read_label_file
@@ -37,7 +38,11 @@ from pycoral.utils.edgetpu import make_interpreter
 from pycoral.utils.edgetpu import run_inference
 
 def main():
-    default_model_dir = '../all_models/TRS'
+
+    with open("shared_memory", "r+b") as f:
+        shmem = mmap.mmap(f.fileno(), 7)
+
+    default_model_dir = './'
     default_model = 'road_signs_quantized_edgetpu.tflite'
     default_labels = 'road_sign_labels.txt'
 
@@ -63,7 +68,7 @@ def main():
 
     while cap.isOpened():
         ret, frame = cap.read()
-        
+        start_t = timeit.default_timer()
         if not ret:
             break
         cv2_im = frame
@@ -73,18 +78,25 @@ def main():
         run_inference(interpreter, cv2_im_rgb.tobytes())
         objs = get_objects(interpreter, args.threshold)[:args.top_k]
         #print(objs)
-        cv2_im = append_objs_to_img(cv2_im, inference_size, objs, labels)
+        cv2_im = append_objs_to_img(cv2_im, inference_size, objs, labels, shmem)
+        terminate_t = timeit.default_timer()
+
+        elapsed_ms = terminate_t - start_t
+        
+        annotate_text = "%.2f FPS, %.2fms total" % (1.0 / elapsed_ms, elapsed_ms*1000)
+        cv2.putText(cv2_im,annotate_text, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
         cv2.imshow('frame', cv2_im)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
-    cv2.destroyAllWindows()
 
-def append_objs_to_img(cv2_im, inference_size, objs, labels):
+    cv2.destroyAllWindows()
+def append_objs_to_img(cv2_im, inference_size, objs, labels, shmem):
     height, width, channels = cv2_im.shape
     scale_x, scale_y = width / inference_size[0], height / inference_size[1]
-
+    idlist = [0, 0, 0, 0, 0, 0]
+    
     for obj in objs:
         bbox = obj.bbox.scale(scale_x, scale_y)
         x0, y0 = int(bbox.xmin), int(bbox.ymin)
@@ -92,13 +104,15 @@ def append_objs_to_img(cv2_im, inference_size, objs, labels):
 
         percent = int(100 * obj.score)
         label = '{}% {}'.format(percent, labels.get(obj.id, obj.id))
-        print(obj.id)
+        #print(obj.id)
+        idlist[obj.id] = 1
         cv2_im = cv2.rectangle(cv2_im, (x0, y0), (x1, y1), (0, 255, 0), 2)
         cv2_im = cv2.putText(cv2_im, label, (x0, y0+30),
                              cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0), 2)
-        #print(label)
+
+    for i in range(6):
+        shmem[i + 1] = idlist[i]    
     
     return cv2_im
-
 if __name__ == '__main__':
     main()
