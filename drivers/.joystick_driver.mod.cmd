@@ -1,0 +1,1 @@
+cmd_/home/pi/working/term_project/drivers/joystick_driver.mod := printf '%s\n'   joystick_driver.o | awk '!x[$$0]++ { print("/home/pi/working/term_project/drivers/"$$0) }' > /home/pi/working/term_project/drivers/joystick_driver.mod

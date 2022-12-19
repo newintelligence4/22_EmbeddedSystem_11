@@ -1,0 +1,1 @@
+cmd_/home/pi/working/term_project/drivers/motordriver.ko := ld -r -EL -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/pi/working/term_project/drivers/motordriver.ko /home/pi/working/term_project/drivers/motordriver.o /home/pi/working/term_project/drivers/motordriver.mod.o;  true
